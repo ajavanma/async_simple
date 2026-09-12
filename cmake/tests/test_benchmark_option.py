@@ -104,8 +104,22 @@ class BenchmarkOptionTest(unittest.TestCase):
             "reuse", True, True, ASYNC_SIMPLE_ENABLE_BENCHMARKS="ON"
         )
 
-    def test_default_on(self):
-        cache = self.configure("default", True, True, **self.dependencies)
+    def test_default_off(self):
+        for populated in (False, True):
+            with self.subTest(populated=populated):
+                variables = self.dependencies if populated else {}
+                cache = self.configure(
+                    "default-" + str(populated), False, False, **variables
+                )
+                self.assertEqual(cache["ASYNC_SIMPLE_ENABLE_BENCHMARKS"], "OFF")
+                for key, value in variables.items():
+                    self.assertEqual(cache[key], value)
+
+    def test_fresh_on(self):
+        cache = self.configure(
+            "on", True, True,
+            ASYNC_SIMPLE_ENABLE_BENCHMARKS="ON", **self.dependencies
+        )
         self.assertEqual(cache["ASYNC_SIMPLE_ENABLE_BENCHMARKS"], "ON")
 
     def test_optional_package_unavailable(self):

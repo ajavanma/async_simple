@@ -40,7 +40,7 @@ target_link_libraries(async_simple_header_only INTERFACE Threads::Threads)
 find_package(Aio QUIET)
 
 option(ASYNC_SIMPLE_ENABLE_TESTS "Build the tests" ON)
-option(ASYNC_SIMPLE_ENABLE_BENCHMARKS "Build benchmarks when Benchmark is available" ON)
+option(ASYNC_SIMPLE_ENABLE_BENCHMARKS "Build benchmarks when Benchmark is available" OFF)
 option(ASYNC_SIMPLE_DISABLE_AIO "Don't build SimpleIOExecutor with AIO" OFF)
 
 if (ASYNC_SIMPLE_ENABLE_BENCHMARKS)
